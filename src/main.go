@@ -14,13 +14,13 @@ func main() {
 		fmt.Println("Failed to load configuration")
 		return
 	}
-
+	fmt.Println("config.yaml is loaded")
 	_, err := database.InitDB()
 	if err != nil {
 		fmt.Println("err open databases")
 		return
 	}
-
+	fmt.Println("DB is connected")
 	router := routes.InitRouter()
 	router.Run(config.Get().Addr)
 }
