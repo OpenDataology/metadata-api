@@ -6,7 +6,7 @@ If you’re interested in contributing code, the best starting point is to have 
 
  accepts PR's (pull requests) from all developers.
 
-Issues can be submitted by anyone - either seasoned developers or newbies.
+Issues can be submitted by anyone - either seasoned developers or newbies. Here is the [code of conduct](https://github.com/dataset-license/community/blob/main/code-of-conduct.md)
 
 #### Installation
 
