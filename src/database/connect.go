@@ -2,7 +2,6 @@ package database
 
 import (
 	"github.com/dataset-license/portal-backend/src/config"
-	"github.com/dataset-license/portal-backend/src/models"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -16,7 +15,6 @@ func InitDB() (*gorm.DB, error) {
 
 	if err == nil {
 		DB = db
-		err := db.AutoMigrate(&models.AdminUser{})
 		return db, err
 	}
 	return nil, err

@@ -1,25 +1,29 @@
 package config
 
 import (
-	"io/ioutil"
-	"gopkg.in/yaml.v2"
+	"fmt"
+	"os"
+	"strconv"
 )
 
 type Config struct {
-	Addr 			string		`yaml:"addr"`
-	DSN				string		`yaml:"dsn"`
-	MaxIdleConn		int			`yaml:"max_idle_conn"`
+	Addr        string
+	DSN         string
+	MaxIdleConn int
 }
 
 var config *Config
 
-func Load(path string) error {
-	result, err := ioutil.ReadFile(path)
+func Load() error {
+	config.Addr = os.Getenv("ADDR")
+	config.DSN = os.Getenv("DSN")
+	max_idle, err := strconv.Atoi(os.Getenv("MAX_IDLE_CONN"))
 	if err != nil {
+		fmt.Println("err max_idle_conn")
 		return err
 	}
-
-	return yaml.Unmarshal(result, &config)
+	config.MaxIdleConn = max_idle
+	return nil
 }
 
 func Get() *Config {

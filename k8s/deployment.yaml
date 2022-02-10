@@ -16,3 +16,19 @@ spec:
       containers:
         - image: robekeane/portal-backend:0.1
           name: portal-backend-con
+          env:
+            - name: ADDR
+              valueFrom:
+                configMapKeyRef:
+                  name: backend-config
+                  key: addr
+            - name: DSN
+              valueFrom:
+                configMapKeyRef:
+                  name: backend-config
+                  key: dsn
+            - name: MAX_IDLE_CONN
+              valueFrom:
+                configMapKeyRef:
+                  name: backend-config
+                  key: max_idle_conn
