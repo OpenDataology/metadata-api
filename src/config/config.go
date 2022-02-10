@@ -12,7 +12,7 @@ type Config struct {
 	MaxIdleConn int
 }
 
-var config *Config
+var config Config
 
 func Load() error {
 	config.Addr = os.Getenv("ADDR")
@@ -26,6 +26,6 @@ func Load() error {
 	return nil
 }
 
-func Get() *Config {
+func Get() Config {
 	return config
 }
