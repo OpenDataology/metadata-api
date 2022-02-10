@@ -10,6 +10,8 @@ Issues can be submitted by anyone - either seasoned developers or newbies.
 
 #### Installation
 
+![img](https://github.com/dataset-license/portal-backend/blob/main/docs/images/structure.png?raw=true)
+
 - **Step 1** Setting up the k8s environment, Google GKE or minikube or microk8s are ok for deployment.
 
 - **Step 2** Setting up database and nft storage.
