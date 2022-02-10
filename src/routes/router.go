@@ -8,7 +8,7 @@ import (
 
 func InitRouter() *gin.Engine {
 	router := gin.Default()
-
+	router.Use(Cors())
 	v1 := router.Group("/api/v1")
 	{
 		dataLicense := new(controllers.DataLicense)
