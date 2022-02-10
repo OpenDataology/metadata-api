@@ -10,11 +10,11 @@ import (
 )
 
 func main() {
-	if err := config.Load("src/config/config.yaml"); err != nil {
+	if err := config.Load(); err != nil {
 		fmt.Println("Failed to load configuration")
 		return
 	}
-	fmt.Println("config.yaml is loaded")
+	fmt.Println("config is loaded")
 	_, err := database.InitDB()
 	if err != nil {
 		fmt.Println("err open databases")

@@ -139,3 +139,5 @@ dmypy.json
 cython_debug/
 
 src/config/config.yaml
+src/config/config_template.yaml
+k8s/configMap.yaml
