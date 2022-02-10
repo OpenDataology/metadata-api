@@ -16,6 +16,6 @@ Issues can be submitted by anyone - either seasoned developers or newbies.
 
 - **Step 3** Setting up `ADDR`, `DSN`, `MAX_IDLE_CONN`environment variables, you can check `/k8s/configMap - template.yaml` for reference.
 
-- **Step 5** Using Dockerfile to build docker image and then upload it to DockerHub.
+- **Step 4** Using Dockerfile to build docker image and then upload it to DockerHub.
 
-- **Step 6** Deploy the project by yaml on k8s. And have fun.
+- **Step 5** Deploy the project by yaml on k8s. And have fun.
