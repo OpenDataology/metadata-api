@@ -4,11 +4,9 @@ import (
 	"github.com/dataset-license/portal-backend/src/database"
 	"github.com/dataset-license/portal-backend/src/utils"
 	"github.com/spf13/cast"
-	"gorm.io/gorm"
 )
 
 type Datalicense struct {
-	gorm.Model
 	Id                          int    `gorm:"type:int;primary_key;autoIncrement" json:"id"`
 	LicenseUuid                 string `gorm:"type:TEXT" json:"license_uuid,omitempty"`
 	LicenseName                 string `gorm:"type:TEXT" json:"license_name,omitempty"`

@@ -1,9 +1,6 @@
 package models
 
-import "gorm.io/gorm"
-
 type Datasets struct {
-	gorm.Model
 	Id                   int    `gorm:"type:int;primary_key;autoIncrement" json:"id"`
 	DatasetName          string `gorm:"type:TEXT" json:"dataset_name,omitempty"`
 	DatasetVersion       string `gorm:"type:TEXT" json:"dataset_version,omitempty"`
