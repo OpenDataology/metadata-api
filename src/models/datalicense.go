@@ -1,6 +1,14 @@
 package models
 
+import (
+	"github.com/dataset-license/portal-backend/src/database"
+	"github.com/dataset-license/portal-backend/src/utils"
+	"github.com/spf13/cast"
+	"gorm.io/gorm"
+)
+
 type Datalicense struct {
+	gorm.Model
 	Id                          int    `gorm:"type:int;primary_key;autoIncrement" json:"id"`
 	LicenseUuid                 string `gorm:"type:TEXT" json:"license_uuid,omitempty"`
 	LicenseName                 string `gorm:"type:TEXT" json:"license_name,omitempty"`
@@ -53,4 +61,15 @@ type Datalicense struct {
 	Additional                  string `gorm:"type:TEXT" json:"additional,omitempty"`
 	Remark                      string `gorm:"type:TEXT" json:"remark,omitempty"`
 	Available                   int    `gorm:"type:int" json:"available,omitempty"`
+}
+
+func GetDatalicensesByPage(p *utils.Pagination) (Datalicenses []Datalicense, err error) {
+	err = database.DB.Model(&Datalicense{}).Scopes(p.GormPaginate()).Find(&Datalicenses).Error
+	if err != nil {
+		return nil, err
+	}
+	var total int64
+	database.DB.Model(&Datalicense{}).Count(&total)
+	p.Total = cast.ToInt(total)
+	return
 }
