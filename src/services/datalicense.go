@@ -16,8 +16,8 @@ func GetDatalicensesService(c *gin.Context, p *utils.Pagination) (h gin.H) {
 		return
 	}
 	res := gin.H{
-		"page":     p.Page,
-		"limit":    p.Size,
+		"pageNum":  p.Page,
+		"pageSize": p.Size,
 		"totalNum": p.Total,
 		"data":     datalicenses,
 	}
