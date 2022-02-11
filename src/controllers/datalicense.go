@@ -3,8 +3,8 @@ package controllers
 import (
 	"net/http"
 
-	"github.com/dataset-license/portal-backend/src/database"
-	"github.com/dataset-license/portal-backend/src/models"
+	service "github.com/dataset-license/portal-backend/src/services"
+	"github.com/dataset-license/portal-backend/src/utils"
 
 	"github.com/gin-gonic/gin"
 )
@@ -14,7 +14,11 @@ type DataLicense struct {
 }
 
 func (a *DataLicense) Index(c *gin.Context) {
-	var datalicenses []models.Datalicense
-	database.DB.Find(&datalicenses)
-	a.JsonSuccess(c, http.StatusOK, gin.H{"data": datalicenses})
+	p := utils.NewPagination(c)
+	res := service.GetDatalicensesService(c, p)
+	a.JsonSuccess(c, http.StatusOK, res)
+}
+
+func GetDatalicensesHandler(c *gin.Context) {
+
 }
