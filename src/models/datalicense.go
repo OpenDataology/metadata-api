@@ -1,8 +1,6 @@
 package models
 
 import (
-	"fmt"
-
 	"github.com/dataset-license/portal-backend/src/database"
 	"github.com/dataset-license/portal-backend/src/utils"
 	"github.com/spf13/cast"
@@ -144,18 +142,39 @@ func GetDatalicensesByPage(p *utils.Pagination) (Datalicenses []Datalicense, err
 }
 
 func GetDatalicenseBasicByID(id int) (Licensebasic *LicenseBasic, err error) {
-	var DatalicenseA Datalicense
+	var _Datalicense Datalicense
 	Licensebasic = new(LicenseBasic)
-	err = database.DB.Model(&Datalicense{}).First(&DatalicenseA, id).Error
+	err = database.DB.Model(&Datalicense{}).First(&_Datalicense, id).Error
 	if err != nil {
 		return nil, err
 	}
-	fmt.Print(DatalicenseA.Id)
-	Licensebasic.Id = DatalicenseA.Id
-	Licensebasic.LicenseName = DatalicenseA.LicenseName
-	Licensebasic.LicenseType = DatalicenseA.LicenseType
-	Licensebasic.LicenseUuid = DatalicenseA.LicenseUuid
-	Licensebasic.OsiApproved = DatalicenseA.OsiApproved
-	Licensebasic.ShortIdentifier = DatalicenseA.ShortIdentifier
+	Licensebasic.Id = _Datalicense.Id
+	Licensebasic.LicenseName = _Datalicense.LicenseName
+	Licensebasic.LicenseType = _Datalicense.LicenseType
+	Licensebasic.LicenseUuid = _Datalicense.LicenseUuid
+	Licensebasic.OsiApproved = _Datalicense.OsiApproved
+	Licensebasic.ShortIdentifier = _Datalicense.ShortIdentifier
+	return
+}
+
+func GetDatalicenseDataByID(id int) (LicenseDataBoxs []LicenseData, err error) {
+	var _Datalicense Datalicense
+	_id_can, _id_cannot := 1, 1
+	err = database.DB.Model(&Datalicense{}).First(&_Datalicense, id).Error
+	if err != nil {
+		return nil, err
+	}
+	if _Datalicense.DataAccessRights != "No" {
+		can := new(LicenseDataCan)
+		can.Id = _id_can
+		can.Property = "Access"
+		_id_can++
+	} else {
+		cannot := new(LicenseDataCannot)
+		cannot.Id = _id_cannot
+		cannot.Property = "Access"
+		_id_cannot++
+	}
+
 	return
 }
