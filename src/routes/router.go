@@ -11,8 +11,9 @@ func InitRouter() *gin.Engine {
 	router.Use(Cors())
 	v1 := router.Group("/api/v1")
 	{
-		dataLicense := new(controllers.DataLicense)
+		dataLicense := new(controllers.BasicInfo)
 		v1.GET("/data-license", dataLicense.Index)
+		v1.GET("/get_license_basic_by_id", dataLicense.GetLicenseBasicById)
 	}
 
 	return router
