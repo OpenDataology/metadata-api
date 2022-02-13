@@ -1,6 +1,8 @@
 package models
 
 import (
+	"fmt"
+
 	"github.com/dataset-license/portal-backend/src/database"
 	"github.com/dataset-license/portal-backend/src/utils"
 	"github.com/spf13/cast"
@@ -61,6 +63,75 @@ type Datalicense struct {
 	Available                   int    `gorm:"type:int" json:"available,omitempty"`
 }
 
+type LicenseBasic struct {
+	Id              int    `json:"id"`
+	LicenseUuid     string `json:"license_uuid,omitempty"`
+	LicenseName     string `json:"license_name,omitempty"`
+	LicenseType     string `json:"license_type,omitempty"`
+	OsiApproved     string `json:"osi_approved,omitempty"`
+	ShortIdentifier string `json:"short_identifier,omitempty"`
+}
+
+type LicenseData struct {
+	Can        LicenseDataCan        `json:"can,omitempty"`
+	Cannot     LicenseDataCannot     `json:"cannot,omitempty"`
+	Obligation LicenseDataObligation `json:"obligation,omitempty"`
+	Limitation LicenseDataLimitation `json:"limitation,omitempty"`
+}
+
+type LicenseDataCan struct {
+	Id       int    `json:"id"`
+	Property string `json:"property,omitempty"`
+}
+
+type LicenseDataCannot struct {
+	Id       int    `json:"id"`
+	Property string `json:"property,omitempty"`
+}
+
+type LicenseDataObligation struct {
+	Id       int    `json:"id"`
+	Property string `json:"property,omitempty"`
+}
+
+type LicenseDataLimitation struct {
+	Id       int    `json:"id"`
+	Property string `json:"property,omitempty"`
+}
+
+type LicenseModel struct {
+	Can        LicenseDataCan        `json:"can,omitempty"`
+	Cannot     LicenseDataCannot     `json:"cannot,omitempty"`
+	Obligation LicenseDataObligation `json:"obligation,omitempty"`
+	Limitation LicenseDataLimitation `json:"limitation,omitempty"`
+}
+
+type LicenseModelCan struct {
+	Id       int    `json:"id"`
+	Property string `json:"property,omitempty"`
+}
+
+type LicenseModelCannot struct {
+	Id       int    `json:"id"`
+	Property string `json:"property,omitempty"`
+}
+
+type LicenseModelObligation struct {
+	Id       int    `json:"id"`
+	Property string `json:"property,omitempty"`
+}
+
+type LicenseModelLimitation struct {
+	Id       int    `json:"id"`
+	Property string `json:"property,omitempty"`
+}
+
+type LicenseOther struct {
+	Id       int    `json:"id"`
+	Property string `json:"property,omitempty"`
+	Value    string `json:"value,omitempty"`
+}
+
 func GetDatalicensesByPage(p *utils.Pagination) (Datalicenses []Datalicense, err error) {
 	err = database.DB.Model(&Datalicense{}).Scopes(p.GormPaginate()).Find(&Datalicenses).Error
 	if err != nil {
@@ -69,5 +140,22 @@ func GetDatalicensesByPage(p *utils.Pagination) (Datalicenses []Datalicense, err
 	var total int64
 	database.DB.Model(&Datalicense{}).Count(&total)
 	p.Total = cast.ToInt(total)
+	return
+}
+
+func GetDatalicenseBasicByID(id int) (Licensebasic *LicenseBasic, err error) {
+	var DatalicenseA Datalicense
+	Licensebasic = new(LicenseBasic)
+	err = database.DB.Model(&Datalicense{}).First(&DatalicenseA, id).Error
+	if err != nil {
+		return nil, err
+	}
+	fmt.Print(DatalicenseA.Id)
+	Licensebasic.Id = DatalicenseA.Id
+	Licensebasic.LicenseName = DatalicenseA.LicenseName
+	Licensebasic.LicenseType = DatalicenseA.LicenseType
+	Licensebasic.LicenseUuid = DatalicenseA.LicenseUuid
+	Licensebasic.OsiApproved = DatalicenseA.OsiApproved
+	Licensebasic.ShortIdentifier = DatalicenseA.ShortIdentifier
 	return
 }
