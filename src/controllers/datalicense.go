@@ -26,8 +26,26 @@ func (a *BasicInfo) GetLicenseBasicById(c *gin.Context) {
 	a.JsonSuccess(c, http.StatusOK, res)
 }
 
+func (a *BasicInfo) GetLicenseBasicByName(c *gin.Context) {
+	name := c.Query("name")
+	res := service.GetDatalicensebasicnameService(c, name)
+	a.JsonSuccess(c, http.StatusOK, res)
+}
+
 func (a *BasicInfo) GetLicenseDataById(c *gin.Context) {
 	id := cast.ToInt(c.Query("id"))
 	res := service.GetDatalicenseDataService(c, id)
+	a.JsonSuccess(c, http.StatusOK, res)
+}
+
+func (a *BasicInfo) GetLicenseModelById(c *gin.Context) {
+	id := cast.ToInt(c.Query("id"))
+	res := service.GetDatalicenseModelService(c, id)
+	a.JsonSuccess(c, http.StatusOK, res)
+}
+
+func (a *BasicInfo) GetLicenseOtherById(c *gin.Context) {
+	id := cast.ToInt(c.Query("id"))
+	res := service.GetDatalicenseOtherService(c, id)
 	a.JsonSuccess(c, http.StatusOK, res)
 }
