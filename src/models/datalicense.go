@@ -74,10 +74,10 @@ type LicenseBasic struct {
 }
 
 type LicenseData struct {
-	Can        LicenseDataCan        `json:"can,omitempty"`
-	Cannot     LicenseDataCannot     `json:"cannot,omitempty"`
-	Obligation LicenseDataObligation `json:"obligation,omitempty"`
-	Limitation LicenseDataLimitation `json:"limitation,omitempty"`
+	Can        []LicenseDataCan        `json:"can,omitempty"`
+	Cannot     []LicenseDataCannot     `json:"cannot,omitempty"`
+	Obligation []LicenseDataObligation `json:"obligation,omitempty"`
+	Limitation []LicenseDataLimitation `json:"limitation,omitempty"`
 }
 
 type LicenseDataCan struct {
@@ -101,10 +101,10 @@ type LicenseDataLimitation struct {
 }
 
 type LicenseModel struct {
-	Can        LicenseDataCan        `json:"can,omitempty"`
-	Cannot     LicenseDataCannot     `json:"cannot,omitempty"`
-	Obligation LicenseDataObligation `json:"obligation,omitempty"`
-	Limitation LicenseDataLimitation `json:"limitation,omitempty"`
+	Can        []LicenseModelCan        `json:"can,omitempty"`
+	Cannot     []LicenseModelCannot     `json:"cannot,omitempty"`
+	Obligation []LicenseModelObligation `json:"obligation,omitempty"`
+	Limitation []LicenseModelLimitation `json:"limitation,omitempty"`
 }
 
 type LicenseModelCan struct {
@@ -162,6 +162,10 @@ func GetDatalicenseBasicByID(id int) (Licensebasic *LicenseBasic, err error) {
 
 func GetDatalicenseDataByID(id int) (LicenseDataBoxs *LicenseData, err error) {
 	var _Datalicense Datalicense
+	var cans []LicenseDataCan
+	var cannots []LicenseDataCannot
+	var obligations []LicenseDataObligation
+	var limitations []LicenseDataLimitation
 	can := new(LicenseDataCan)
 	cannot := new(LicenseDataCannot)
 	obligation := new(LicenseDataObligation)
@@ -184,10 +188,12 @@ func GetDatalicenseDataByID(id int) (LicenseDataBoxs *LicenseData, err error) {
 			if _keyValue != "No" {
 				can.Id = _id_can
 				can.Property = _Property[0]
+				cans = append(cans, *can)
 				_id_can++
 			} else {
 				cannot.Id = _id_cannot
 				cannot.Property = _Property[0]
+				cannots = append(cannots, *cannot)
 				_id_cannot++
 			}
 		}
@@ -196,6 +202,7 @@ func GetDatalicenseDataByID(id int) (LicenseDataBoxs *LicenseData, err error) {
 			if _keyValue != "No" {
 				obligation.Id = _id_can
 				obligation.Property = _Property[0]
+				obligations = append(obligations, *obligation)
 				_id_obligation++
 			}
 		}
@@ -204,14 +211,15 @@ func GetDatalicenseDataByID(id int) (LicenseDataBoxs *LicenseData, err error) {
 			if _keyValue != "No" {
 				limitation.Id = _id_can
 				limitation.Property = _Property[0]
+				limitations = append(limitations, *limitation)
 				_id_limitation++
 			}
 		}
 	}
-	LicenseDataBoxs.Can = *can
-	LicenseDataBoxs.Cannot = *cannot
-	LicenseDataBoxs.Obligation = *obligation
-	LicenseDataBoxs.Limitation = *limitation
+	LicenseDataBoxs.Can = cans
+	LicenseDataBoxs.Cannot = cannots
+	LicenseDataBoxs.Obligation = obligations
+	LicenseDataBoxs.Limitation = limitations
 
 	return
 }
