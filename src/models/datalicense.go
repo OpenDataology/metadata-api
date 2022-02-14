@@ -1,7 +1,8 @@
 package models
 
 import (
-	"fmt"
+	"reflect"
+	"strings"
 
 	"github.com/dataset-license/portal-backend/src/database"
 	"github.com/dataset-license/portal-backend/src/utils"
@@ -144,18 +145,73 @@ func GetDatalicensesByPage(p *utils.Pagination) (Datalicenses []Datalicense, err
 }
 
 func GetDatalicenseBasicByID(id int) (Licensebasic *LicenseBasic, err error) {
-	var DatalicenseA Datalicense
+	var _Datalicense Datalicense
 	Licensebasic = new(LicenseBasic)
-	err = database.DB.Model(&Datalicense{}).First(&DatalicenseA, id).Error
+	err = database.DB.Model(&Datalicense{}).First(&_Datalicense, id).Error
 	if err != nil {
 		return nil, err
 	}
-	fmt.Print(DatalicenseA.Id)
-	Licensebasic.Id = DatalicenseA.Id
-	Licensebasic.LicenseName = DatalicenseA.LicenseName
-	Licensebasic.LicenseType = DatalicenseA.LicenseType
-	Licensebasic.LicenseUuid = DatalicenseA.LicenseUuid
-	Licensebasic.OsiApproved = DatalicenseA.OsiApproved
-	Licensebasic.ShortIdentifier = DatalicenseA.ShortIdentifier
+	Licensebasic.Id = _Datalicense.Id
+	Licensebasic.LicenseName = _Datalicense.LicenseName
+	Licensebasic.LicenseType = _Datalicense.LicenseType
+	Licensebasic.LicenseUuid = _Datalicense.LicenseUuid
+	Licensebasic.OsiApproved = _Datalicense.OsiApproved
+	Licensebasic.ShortIdentifier = _Datalicense.ShortIdentifier
+	return
+}
+
+func GetDatalicenseDataByID(id int) (LicenseDataBoxs *LicenseData, err error) {
+	var _Datalicense Datalicense
+	can := new(LicenseDataCan)
+	cannot := new(LicenseDataCannot)
+	obligation := new(LicenseDataObligation)
+	limitation := new(LicenseDataLimitation)
+	LicenseDataBoxs = new(LicenseData)
+	_id_can, _id_cannot, _id_obligation, _id_limitation := 1, 1, 1, 1
+	err = database.DB.Model(&Datalicense{}).First(&_Datalicense, id).Error
+	if err != nil {
+		return nil, err
+	}
+	o := reflect.ValueOf(_Datalicense)
+	if o.Kind() == reflect.Ptr {
+		o = o.Elem()
+	}
+	for i := 0; i < o.NumField(); i++ {
+		_keyName := o.Type().Field(i).Name
+		_keyValue := o.FieldByName(_keyName).String()
+		if strings.Contains(_keyName, "Rights") {
+			_Property := strings.Split(_keyName, "Rights")
+			if _keyValue != "No" {
+				can.Id = _id_can
+				can.Property = _Property[0]
+				_id_can++
+			} else {
+				cannot.Id = _id_cannot
+				cannot.Property = _Property[0]
+				_id_cannot++
+			}
+		}
+		if strings.Contains(_keyName, "Obligations") {
+			_Property := strings.Split(_keyName, "Obligations")
+			if _keyValue != "No" {
+				obligation.Id = _id_can
+				obligation.Property = _Property[0]
+				_id_obligation++
+			}
+		}
+		if strings.Contains(_keyName, "Limitations") {
+			_Property := strings.Split(_keyName, "Limitations")
+			if _keyValue != "No" {
+				limitation.Id = _id_can
+				limitation.Property = _Property[0]
+				_id_limitation++
+			}
+		}
+	}
+	LicenseDataBoxs.Can = *can
+	LicenseDataBoxs.Cannot = *cannot
+	LicenseDataBoxs.Obligation = *obligation
+	LicenseDataBoxs.Limitation = *limitation
+
 	return
 }
