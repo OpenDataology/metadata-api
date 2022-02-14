@@ -183,7 +183,7 @@ func GetDatalicenseDataByID(id int) (LicenseDataBoxs *LicenseData, err error) {
 	for i := 0; i < o.NumField(); i++ {
 		_keyName := o.Type().Field(i).Name
 		_keyValue := o.FieldByName(_keyName).String()
-		if strings.Contains(_keyName, "Rights") {
+		if strings.Contains(_keyName, "Rights") && strings.Contains(_keyName, "Data") {
 			_Property := strings.Split(_keyName, "Rights")
 			if _keyValue != "No" {
 				can.Id = _id_can
@@ -197,7 +197,7 @@ func GetDatalicenseDataByID(id int) (LicenseDataBoxs *LicenseData, err error) {
 				_id_cannot++
 			}
 		}
-		if strings.Contains(_keyName, "Obligations") {
+		if strings.Contains(_keyName, "Obligations") && strings.Contains(_keyName, "Data") {
 			_Property := strings.Split(_keyName, "Obligations")
 			if _keyValue != "No" {
 				obligation.Id = _id_can
@@ -206,7 +206,7 @@ func GetDatalicenseDataByID(id int) (LicenseDataBoxs *LicenseData, err error) {
 				_id_obligation++
 			}
 		}
-		if strings.Contains(_keyName, "Limitations") {
+		if strings.Contains(_keyName, "Limitations") && strings.Contains(_keyName, "Data") {
 			_Property := strings.Split(_keyName, "Limitations")
 			if _keyValue != "No" {
 				limitation.Id = _id_can
