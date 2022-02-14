@@ -35,3 +35,15 @@ func GetDatalicensebasicService(c *gin.Context, id int) (h gin.H) {
 	}
 	return res
 }
+
+func GetDatalicenseDataService(c *gin.Context, id int) (h gin.H) {
+	datalicensedata, err := models.GetDatalicenseDataByID(id)
+	if err != nil {
+		c.JSON(http.StatusOK, gin.H{"err": "DB Error"})
+		return
+	}
+	res := gin.H{
+		"data": &datalicensedata,
+	}
+	return res
+}

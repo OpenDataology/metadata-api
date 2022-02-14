@@ -25,3 +25,9 @@ func (a *BasicInfo) GetLicenseBasicById(c *gin.Context) {
 	res := service.GetDatalicensebasicService(c, id)
 	a.JsonSuccess(c, http.StatusOK, res)
 }
+
+func (a *BasicInfo) GetLicenseDataById(c *gin.Context) {
+	id := cast.ToInt(c.Query("id"))
+	res := service.GetDatalicenseDataService(c, id)
+	a.JsonSuccess(c, http.StatusOK, res)
+}
