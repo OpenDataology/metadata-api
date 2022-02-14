@@ -14,7 +14,10 @@ func InitRouter() *gin.Engine {
 		dataLicense := new(controllers.BasicInfo)
 		v1.GET("/data-license", dataLicense.Index)
 		v1.GET("/get_license_basic_by_id", dataLicense.GetLicenseBasicById)
+		v1.GET("/get_license_basic_by_name", dataLicense.GetLicenseBasicByName)
 		v1.GET("/get_license_data_by_id", dataLicense.GetLicenseDataById)
+		v1.GET("/get_license_model_by_id", dataLicense.GetLicenseModelById)
+		v1.GET("/get_license_other_by_id", dataLicense.GetLicenseOtherById)
 	}
 
 	return router

@@ -55,11 +55,11 @@ type Datalicense struct {
 	ModelRevRights              string `gorm:"type:TEXT" json:"model_rev_rights,omitempty"`
 	ModelRevObligations         string `gorm:"type:TEXT" json:"model_rev_obligations,omitempty"`
 	ModelRevLimitations         string `gorm:"type:TEXT" json:"model_rev_limitations,omitempty"`
-	Credit                      string `gorm:"type:TEXT" json:"credit,omitempty"`
-	ValidityPeriod              int    `gorm:"type:int" json:"validity_period,omitempty"`
-	Liability                   string `gorm:"type:TEXT" json:"liability,omitempty"`
-	Designated                  string `gorm:"type:TEXT" json:"designated,omitempty"`
-	Additional                  string `gorm:"type:TEXT" json:"additional,omitempty"`
+	OtherCredit                 string `gorm:"type:TEXT" json:"credit,omitempty"`
+	OtherValidityPeriod         int    `gorm:"type:int" json:"validity_period,omitempty"`
+	OtherLiability              string `gorm:"type:TEXT" json:"liability,omitempty"`
+	OtherDesignated             string `gorm:"type:TEXT" json:"designated,omitempty"`
+	OtherAdditional             string `gorm:"type:TEXT" json:"additional,omitempty"`
 	Remark                      string `gorm:"type:TEXT" json:"remark,omitempty"`
 	Available                   int    `gorm:"type:int" json:"available,omitempty"`
 }
@@ -160,6 +160,22 @@ func GetDatalicenseBasicByID(id int) (Licensebasic *LicenseBasic, err error) {
 	return
 }
 
+func GetDatalicenseBasicByName(name string) (Licensebasic *LicenseBasic, err error) {
+	var _Datalicense Datalicense
+	Licensebasic = new(LicenseBasic)
+	err = database.DB.Model(&Datalicense{}).Where("license_name = ?", name).First(&_Datalicense).Error
+	if err != nil {
+		return nil, err
+	}
+	Licensebasic.Id = _Datalicense.Id
+	Licensebasic.LicenseName = _Datalicense.LicenseName
+	Licensebasic.LicenseType = _Datalicense.LicenseType
+	Licensebasic.LicenseUuid = _Datalicense.LicenseUuid
+	Licensebasic.OsiApproved = _Datalicense.OsiApproved
+	Licensebasic.ShortIdentifier = _Datalicense.ShortIdentifier
+	return
+}
+
 func GetDatalicenseDataByID(id int) (LicenseDataBoxs *LicenseData, err error) {
 	var _Datalicense Datalicense
 	var cans []LicenseDataCan
@@ -200,7 +216,7 @@ func GetDatalicenseDataByID(id int) (LicenseDataBoxs *LicenseData, err error) {
 		if strings.Contains(_keyName, "Obligations") && strings.Contains(_keyName, "Data") {
 			_Property := strings.Split(_keyName, "Obligations")
 			if _keyValue != "No" {
-				obligation.Id = _id_can
+				obligation.Id = _id_obligation
 				obligation.Property = _Property[0]
 				obligations = append(obligations, *obligation)
 				_id_obligation++
@@ -209,7 +225,7 @@ func GetDatalicenseDataByID(id int) (LicenseDataBoxs *LicenseData, err error) {
 		if strings.Contains(_keyName, "Limitations") && strings.Contains(_keyName, "Data") {
 			_Property := strings.Split(_keyName, "Limitations")
 			if _keyValue != "No" {
-				limitation.Id = _id_can
+				limitation.Id = _id_limitation
 				limitation.Property = _Property[0]
 				limitations = append(limitations, *limitation)
 				_id_limitation++
@@ -221,5 +237,94 @@ func GetDatalicenseDataByID(id int) (LicenseDataBoxs *LicenseData, err error) {
 	LicenseDataBoxs.Obligation = obligations
 	LicenseDataBoxs.Limitation = limitations
 
+	return
+}
+
+func GetDatalicenseModelByID(id int) (LicenseModelBoxs *LicenseModel, err error) {
+	var _Datalicense Datalicense
+	var cans []LicenseModelCan
+	var cannots []LicenseModelCannot
+	var obligations []LicenseModelObligation
+	var limitations []LicenseModelLimitation
+	can := new(LicenseModelCan)
+	cannot := new(LicenseModelCannot)
+	obligation := new(LicenseModelObligation)
+	limitation := new(LicenseModelLimitation)
+	LicenseModelBoxs = new(LicenseModel)
+	_id_can, _id_cannot, _id_obligation, _id_limitation := 1, 1, 1, 1
+	err = database.DB.Model(&Datalicense{}).First(&_Datalicense, id).Error
+	if err != nil {
+		return nil, err
+	}
+	o := reflect.ValueOf(_Datalicense)
+	if o.Kind() == reflect.Ptr {
+		o = o.Elem()
+	}
+	for i := 0; i < o.NumField(); i++ {
+		_keyName := o.Type().Field(i).Name
+		_keyValue := o.FieldByName(_keyName).String()
+		if strings.Contains(_keyName, "Rights") && strings.Contains(_keyName, "Model") {
+			_Property := strings.Split(_keyName, "Rights")
+			if _keyValue != "No" {
+				can.Id = _id_can
+				can.Property = _Property[0]
+				cans = append(cans, *can)
+				_id_can++
+			} else {
+				cannot.Id = _id_cannot
+				cannot.Property = _Property[0]
+				cannots = append(cannots, *cannot)
+				_id_cannot++
+			}
+		}
+		if strings.Contains(_keyName, "Obligations") && strings.Contains(_keyName, "Model") {
+			_Property := strings.Split(_keyName, "Obligations")
+			if _keyValue != "No" {
+				obligation.Id = _id_obligation
+				obligation.Property = _Property[0]
+				obligations = append(obligations, *obligation)
+				_id_obligation++
+			}
+		}
+		if strings.Contains(_keyName, "Limitations") && strings.Contains(_keyName, "Model") {
+			_Property := strings.Split(_keyName, "Limitations")
+			if _keyValue != "No" {
+				limitation.Id = _id_limitation
+				limitation.Property = _Property[0]
+				limitations = append(limitations, *limitation)
+				_id_limitation++
+			}
+		}
+	}
+	LicenseModelBoxs.Can = cans
+	LicenseModelBoxs.Cannot = cannots
+	LicenseModelBoxs.Obligation = obligations
+	LicenseModelBoxs.Limitation = limitations
+
+	return
+}
+
+func GetDatalicenseOtherByID(id int) (LicenseOtherBoxs []LicenseOther, err error) {
+	var _Datalicense Datalicense
+	_id_other := 1
+	other := new(LicenseOther)
+	err = database.DB.Model(&Datalicense{}).First(&_Datalicense, id).Error
+	if err != nil {
+		return nil, err
+	}
+	o := reflect.ValueOf(_Datalicense)
+	if o.Kind() == reflect.Ptr {
+		o = o.Elem()
+	}
+	for i := 0; i < o.NumField(); i++ {
+		_keyName := o.Type().Field(i).Name
+		if strings.Contains(_keyName, "Other") {
+			_Property := strings.Split(_keyName, "Other")
+			other.Id = _id_other
+			other.Property = _Property[1]
+			LicenseOtherBoxs = append(LicenseOtherBoxs, *other)
+			_id_other++
+		}
+	}
 	return
 }
