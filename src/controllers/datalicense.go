@@ -10,11 +10,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type BasicInfo struct {
-	Basic
-}
-
-func (a *BasicInfo) Index(c *gin.Context) {
+func (a *BasicInfo) ListDatasetLicenses(c *gin.Context) {
 	p := utils.NewPagination(c)
 	res := service.GetDatalicensesService(c, p)
 	a.JsonSuccess(c, http.StatusOK, res)
