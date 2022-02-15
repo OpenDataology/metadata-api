@@ -46,3 +46,19 @@ func GetDatasetsByPage(p *utils.Pagination) (Datasets []Dataset, err error) {
 	p.Total = cast.ToInt(total)
 	return
 }
+
+func GetDatasetByID(id int) (_Dataset *Dataset, err error) {
+	err = database.DB.Model(&Datalicense{}).First(&_Dataset, id).Error
+	if err != nil {
+		return nil, err
+	}
+	return
+}
+
+func GetDatasetByName(name string) (_Dataset *Dataset, err error) {
+	err = database.DB.Model(&Datalicense{}).Where("dataset_name = ?", name).First(&_Dataset).Error
+	if err != nil {
+		return nil, err
+	}
+	return
+}
