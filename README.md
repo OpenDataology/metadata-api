@@ -1,14 +1,16 @@
 # portal-backend
 The dataset metadata sharing platform backend.
 
-#### How to contribute
+## How to contribute
 If you’re interested in contributing code, the best starting point is to have a look at our github issues to see which tasks are the most urgent. 
 
  accepts PR's (pull requests) from all developers.
 
 Issues can be submitted by anyone - either seasoned developers or newbies. Here is the [code of conduct](https://github.com/dataset-license/community/blob/main/code-of-conduct.md)
 
-#### Installation
+## Installation
+
+Deployment Structure
 
 ![img](https://github.com/dataset-license/portal-backend/blob/main/docs/images/structure.png?raw=true)
 
@@ -21,3 +23,9 @@ Issues can be submitted by anyone - either seasoned developers or newbies. Here 
 - **Step 4** Using Dockerfile to build docker image and then upload it to DockerHub.
 
 - **Step 5** Deploy the project by yaml on k8s. And have fun.
+
+## How to use
+
+Portal-backend uses [gin](https://github.com/gin-gonic/gin) and [gorm](https://github.com/go-gorm/gorm) to provide robust webapi, the API Doc is [here](https://github.com/dataset-license/portal-backend/wiki/Portal-beckend-API-Doc). 
+
+Now you can use the webapi to build your own apps.
