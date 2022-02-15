@@ -1,6 +1,12 @@
 package models
 
-type Datasets struct {
+import (
+	"github.com/dataset-license/portal-backend/src/database"
+	"github.com/dataset-license/portal-backend/src/utils"
+	"github.com/spf13/cast"
+)
+
+type Dataset struct {
 	Id                   int    `gorm:"type:int;primary_key;autoIncrement" json:"id"`
 	DatasetName          string `gorm:"type:TEXT" json:"dataset_name,omitempty"`
 	DatasetVersion       string `gorm:"type:TEXT" json:"dataset_version,omitempty"`
@@ -28,4 +34,15 @@ type Datasets struct {
 	AdditionalNotes      string `gorm:"type:TEXT" json:"additional_notes,omitempty"`
 	Challenges           string `gorm:"type:TEXT" json:"challenges,omitempty"`
 	Available            int    `gorm:"type:int" json:"available,omitempty"`
+}
+
+func GetDatasetsByPage(p *utils.Pagination) (Datasets []Dataset, err error) {
+	err = database.DB.Model(&Dataset{}).Scopes(p.GormPaginate()).Find(&Datasets).Error
+	if err != nil {
+		return nil, err
+	}
+	var total int64
+	database.DB.Model(&Dataset{}).Count(&total)
+	p.Total = cast.ToInt(total)
+	return
 }

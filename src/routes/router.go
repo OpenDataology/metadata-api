@@ -11,13 +11,15 @@ func InitRouter() *gin.Engine {
 	router.Use(Cors())
 	v1 := router.Group("/api/v1")
 	{
-		dataLicense := new(controllers.BasicInfo)
-		v1.GET("/data-license", dataLicense.Index)
-		v1.GET("/get_license_basic_by_id", dataLicense.GetLicenseBasicById)
-		v1.GET("/get_license_basic_by_name", dataLicense.GetLicenseBasicByName)
-		v1.GET("/get_license_data_by_id", dataLicense.GetLicenseDataById)
-		v1.GET("/get_license_model_by_id", dataLicense.GetLicenseModelById)
-		v1.GET("/get_license_other_by_id", dataLicense.GetLicenseOtherById)
+		basic := new(controllers.BasicInfo)
+		v1.GET("/data-license", basic.ListDatasetLicenses)
+		v1.GET("/dataset", basic.ListDatasets)
+		v1.GET("/get_license_basic_by_id", basic.GetLicenseBasicById)
+		v1.GET("/get_license_basic_by_name", basic.GetLicenseBasicByName)
+		v1.GET("/get_license_data_by_id", basic.GetLicenseDataById)
+		v1.GET("/get_license_model_by_id", basic.GetLicenseModelById)
+		v1.GET("/get_license_other_by_id", basic.GetLicenseOtherById)
+
 	}
 
 	return router

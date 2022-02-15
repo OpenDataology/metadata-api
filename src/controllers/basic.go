@@ -7,6 +7,10 @@ import (
 type Basic struct {
 }
 
+type BasicInfo struct {
+	Basic
+}
+
 func (basic *Basic) JsonSuccess(c *gin.Context, status int, h gin.H) {
 	h["status"] = "success"
 	c.JSON(status, h)

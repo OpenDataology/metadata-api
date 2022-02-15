@@ -24,6 +24,21 @@ func GetDatalicensesService(c *gin.Context, p *utils.Pagination) (h gin.H) {
 	return res
 }
 
+func GetDatasetsService(c *gin.Context, p *utils.Pagination) (h gin.H) {
+	datasets, err := models.GetDatasetsByPage(p)
+	if err != nil {
+		c.JSON(http.StatusOK, gin.H{"err": "DB Error"})
+		return
+	}
+	res := gin.H{
+		"pageNum":  p.Page,
+		"pageSize": p.Size,
+		"totalNum": p.Total,
+		"data":     datasets,
+	}
+	return res
+}
+
 func GetDatalicensebasicService(c *gin.Context, id int) (h gin.H) {
 	datalicensebasic, err := models.GetDatalicenseBasicByID(id)
 	if err != nil {
