@@ -19,6 +19,8 @@ func InitRouter() *gin.Engine {
 		v1.GET("/get_license_data_by_id", basic.GetLicenseDataById)
 		v1.GET("/get_license_model_by_id", basic.GetLicenseModelById)
 		v1.GET("/get_license_other_by_id", basic.GetLicenseOtherById)
+		v1.GET("/get_dataset_by_id", basic.GetDatasetById)
+		v1.GET("/get_dataset_by_name", basic.GetDatasetByName)
 
 	}
 
