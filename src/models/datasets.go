@@ -48,7 +48,7 @@ func GetDatasetsByPage(p *utils.Pagination) (Datasets []Dataset, err error) {
 }
 
 func GetDatasetByID(id int) (_Dataset *Dataset, err error) {
-	err = database.DB.Model(&Datalicense{}).First(&_Dataset, id).Error
+	err = database.DB.Model(&Dataset{}).First(&_Dataset, id).Error
 	if err != nil {
 		return nil, err
 	}
@@ -56,7 +56,7 @@ func GetDatasetByID(id int) (_Dataset *Dataset, err error) {
 }
 
 func GetDatasetByName(name string) (_Dataset *Dataset, err error) {
-	err = database.DB.Model(&Datalicense{}).Where("dataset_name = ?", name).First(&_Dataset).Error
+	err = database.DB.Model(&Dataset{}).Where("dataset_name = ?", name).First(&_Dataset).Error
 	if err != nil {
 		return nil, err
 	}
