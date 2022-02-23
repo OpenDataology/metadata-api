@@ -12,7 +12,7 @@ import (
 
 func (a *BasicInfo) ListDatasets(c *gin.Context) {
 	p := utils.NewPagination(c)
-	res := service.GetDatalicensesService(c, p)
+	res := service.GetDatasetsService(c, p)
 	a.JsonSuccess(c, http.StatusOK, res)
 }
 
