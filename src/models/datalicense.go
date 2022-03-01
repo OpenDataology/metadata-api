@@ -133,13 +133,13 @@ type LicenseOther struct {
 	Value    string `json:"value,omitempty"`
 }
 
-func GetDatalicensesByPage(p *utils.Pagination) (Datalicenses []Datalicense, err error) {
-	err = database.DB.Model(&Datalicense{}).Scopes(p.GormPaginate()).Find(&Datalicenses).Error
+func GetDatalicensesByPage(p *utils.Pagination, t string) (Datalicenses []Datalicense, err error) {
+	err = database.DB.Model(&Datalicense{}).Where("license_type = ?", t).Scopes(p.GormPaginate()).Find(&Datalicenses).Error
 	if err != nil {
 		return nil, err
 	}
 	var total int64
-	database.DB.Model(&Datalicense{}).Count(&total)
+	database.DB.Model(&Datalicense{}).Where("license_type = ?", t).Count(&total)
 	p.Total = cast.ToInt(total)
 	return
 }
