@@ -11,8 +11,10 @@ import (
 )
 
 func (a *BasicInfo) ListDatasetLicenses(c *gin.Context) {
+	tp := [4]string{"all", "License", "Data-Specific-License", "DataSource Terms of Use"}
 	p := utils.NewPagination(c)
-	t := c.Query("type")
+	int_tp := cast.ToInt(c.Query("type"))
+	t := tp[int_tp]
 	res := service.GetDatalicensesService(c, p, t)
 	a.JsonSuccess(c, http.StatusOK, res)
 }
