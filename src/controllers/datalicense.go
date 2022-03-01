@@ -12,7 +12,8 @@ import (
 
 func (a *BasicInfo) ListDatasetLicenses(c *gin.Context) {
 	p := utils.NewPagination(c)
-	res := service.GetDatalicensesService(c, p)
+	t := c.Query("type")
+	res := service.GetDatalicensesService(c, p, t)
 	a.JsonSuccess(c, http.StatusOK, res)
 }
 

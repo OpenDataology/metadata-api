@@ -9,8 +9,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func GetDatalicensesService(c *gin.Context, p *utils.Pagination) (h gin.H) {
-	datalicenses, err := models.GetDatalicensesByPage(p)
+func GetDatalicensesService(c *gin.Context, p *utils.Pagination, t string) (h gin.H) {
+	datalicenses, err := models.GetDatalicensesByPage(p, t)
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{"err": "DB Error"})
 		return
