@@ -12,18 +12,21 @@ import (
 
 func (a *BasicInfo) ListDatasets(c *gin.Context) {
 	p := utils.NewPagination(c)
-	res := service.GetDatasetsService(c, p)
+	token := c.Query("token")
+	res := service.GetDatasetsService(c, p, token)
 	a.JsonSuccess(c, http.StatusOK, res)
 }
 
 func (a *BasicInfo) GetDatasetById(c *gin.Context) {
 	id := cast.ToInt(c.Query("id"))
-	res := service.GetDatasetIDService(c, id)
+	token := c.Query("token")
+	res := service.GetDatasetIDService(c, id, token)
 	a.JsonSuccess(c, http.StatusOK, res)
 }
 
 func (a *BasicInfo) GetDatasetByName(c *gin.Context) {
 	name := c.Query("name")
-	res := service.GetDatasetNameService(c, name)
+	token := c.Query("token")
+	res := service.GetDatasetNameService(c, name, token)
 	a.JsonSuccess(c, http.StatusOK, res)
 }

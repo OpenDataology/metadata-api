@@ -2,7 +2,6 @@ package utils
 
 import (
 	"github.com/dataset-license/portal-backend/src/config"
-	"github.com/dataset-license/portal-backend/src/database"
 )
 
 type User struct {
@@ -11,14 +10,9 @@ type User struct {
 	Token string `gorm:"type:TEXT" json:"token,omitempty"`
 }
 
-func GetToken() (isAuth bool, err error) {
+func GetToken(token string) (isAuth bool, err error) {
 	config := config.Get()
-	var _User User
-	err = database.DB.Model(&User{}).First(&_User).Error
-	if err != nil {
-		return false, err
-	}
-	if _User.Token == config.TOKEN {
+	if token == config.TOKEN {
 		return true, nil
 	} else {
 		return false, nil

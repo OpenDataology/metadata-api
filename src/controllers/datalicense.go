@@ -11,40 +11,46 @@ import (
 )
 
 func (a *BasicInfo) ListDatasetLicenses(c *gin.Context) {
+	token := c.Query("token")
 	tp := [4]string{"all", "License", "Data-Specific-License", "DataSource Terms of Use"}
 	p := utils.NewPagination(c)
 	int_tp := cast.ToInt(c.Query("type"))
 	t := tp[int_tp]
-	res := service.GetDatalicensesService(c, p, t)
+	res := service.GetDatalicensesService(c, p, t, token)
 	a.JsonSuccess(c, http.StatusOK, res)
 }
 
 func (a *BasicInfo) GetLicenseBasicById(c *gin.Context) {
+	token := c.Query("token")
 	id := cast.ToInt(c.Query("id"))
-	res := service.GetDatalicensebasicService(c, id)
+	res := service.GetDatalicensebasicService(c, id, token)
 	a.JsonSuccess(c, http.StatusOK, res)
 }
 
 func (a *BasicInfo) GetLicenseBasicByName(c *gin.Context) {
+	token := c.Query("token")
 	name := c.Query("name")
-	res := service.GetDatalicensebasicnameService(c, name)
+	res := service.GetDatalicensebasicnameService(c, name, token)
 	a.JsonSuccess(c, http.StatusOK, res)
 }
 
 func (a *BasicInfo) GetLicenseDataById(c *gin.Context) {
+	token := c.Query("token")
 	id := cast.ToInt(c.Query("id"))
-	res := service.GetDatalicenseDataService(c, id)
+	res := service.GetDatalicenseDataService(c, id, token)
 	a.JsonSuccess(c, http.StatusOK, res)
 }
 
 func (a *BasicInfo) GetLicenseModelById(c *gin.Context) {
+	token := c.Query("token")
 	id := cast.ToInt(c.Query("id"))
-	res := service.GetDatalicenseModelService(c, id)
+	res := service.GetDatalicenseModelService(c, id, token)
 	a.JsonSuccess(c, http.StatusOK, res)
 }
 
 func (a *BasicInfo) GetLicenseOtherById(c *gin.Context) {
+	token := c.Query("token")
 	id := cast.ToInt(c.Query("id"))
-	res := service.GetDatalicenseOtherService(c, id)
+	res := service.GetDatalicenseOtherService(c, id, token)
 	a.JsonSuccess(c, http.StatusOK, res)
 }

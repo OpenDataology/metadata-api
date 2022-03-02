@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func GetDatasetsService(c *gin.Context, p *utils.Pagination) (h gin.H) {
+func GetDatasetsService(c *gin.Context, p *utils.Pagination, token string) (h gin.H) {
 	datasets, err := models.GetDatasetsByPage(p)
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{"err": "DB Error"})
@@ -23,7 +23,7 @@ func GetDatasetsService(c *gin.Context, p *utils.Pagination) (h gin.H) {
 	return res
 }
 
-func GetDatasetIDService(c *gin.Context, id int) (h gin.H) {
+func GetDatasetIDService(c *gin.Context, id int, token string) (h gin.H) {
 	datasetid, err := models.GetDatasetByID(id)
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{"err": "DB Error"})
@@ -35,7 +35,7 @@ func GetDatasetIDService(c *gin.Context, id int) (h gin.H) {
 	return res
 }
 
-func GetDatasetNameService(c *gin.Context, name string) (h gin.H) {
+func GetDatasetNameService(c *gin.Context, name string, token string) (h gin.H) {
 	datasetname, err := models.GetDatasetByName(name)
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{"err": "DB Error"})
