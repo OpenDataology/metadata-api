@@ -32,3 +32,8 @@ spec:
                 configMapKeyRef:
                   name: backend-config
                   key: max_idle_conn
+            - name: TOKEN
+              valueFrom:
+                configMapKeyRef:
+                  name: backend-config
+                  key: token
