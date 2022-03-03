@@ -46,3 +46,15 @@ func GetDatasetNameService(c *gin.Context, name string, token string) (h gin.H) 
 	}
 	return res
 }
+
+func SearchDatasetNameService(c *gin.Context, name string, token string) (h gin.H) {
+	datasetname, err := models.SearchDatasetByName(name)
+	if err != nil {
+		c.JSON(http.StatusOK, gin.H{"err": "DB Error"})
+		return
+	}
+	res := gin.H{
+		"data": &datasetname,
+	}
+	return res
+}

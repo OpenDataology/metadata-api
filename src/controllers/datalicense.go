@@ -34,6 +34,13 @@ func (a *BasicInfo) GetLicenseBasicByName(c *gin.Context) {
 	a.JsonSuccess(c, http.StatusOK, res)
 }
 
+func (a *BasicInfo) SearchLicenseBasicByName(c *gin.Context) {
+	token := c.Query("token")
+	name := c.Query("name")
+	res := service.SearchDatalicensebasicnameService(c, name, token)
+	a.JsonSuccess(c, http.StatusOK, res)
+}
+
 func (a *BasicInfo) GetLicenseDataById(c *gin.Context) {
 	token := c.Query("token")
 	id := cast.ToInt(c.Query("id"))

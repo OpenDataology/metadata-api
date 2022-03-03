@@ -30,3 +30,10 @@ func (a *BasicInfo) GetDatasetByName(c *gin.Context) {
 	res := service.GetDatasetNameService(c, name, token)
 	a.JsonSuccess(c, http.StatusOK, res)
 }
+
+func (a *BasicInfo) SearchDatasetByName(c *gin.Context) {
+	name := c.Query("name")
+	token := c.Query("token")
+	res := service.SearchDatasetNameService(c, name, token)
+	a.JsonSuccess(c, http.StatusOK, res)
+}
