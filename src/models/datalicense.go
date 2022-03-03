@@ -181,19 +181,12 @@ func GetDatalicenseBasicByName(name string) (Licensebasic *LicenseBasic, err err
 	return
 }
 
-func SearchDatalicenseBasicByName(name string) (Licensebasic *LicenseBasic, err error) {
-	var _Datalicense Datalicense
-	Licensebasic = new(LicenseBasic)
-	err = database.DB.Model(&Datalicense{}).Limit(20).Where("license_name LIKE ?", name+"%").Find(&_Datalicense).Error
+func SearchDatalicenseBasicByName(name string) (LicenseBasics []LicenseBasic, err error) {
+
+	err = database.DB.Model(&Datalicense{}).Limit(20).Where("license_name LIKE ?", name+"%").Find(&LicenseBasics).Error
 	if err != nil {
 		return nil, err
 	}
-	Licensebasic.Id = _Datalicense.Id
-	Licensebasic.LicenseName = _Datalicense.LicenseName
-	Licensebasic.LicenseType = _Datalicense.LicenseType
-	Licensebasic.LicenseUuid = _Datalicense.LicenseUuid
-	Licensebasic.OsiApproved = _Datalicense.OsiApproved
-	Licensebasic.ShortIdentifier = _Datalicense.ShortIdentifier
 	return
 }
 
