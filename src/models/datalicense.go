@@ -183,7 +183,7 @@ func GetDatalicenseBasicByName(name string) (Licensebasic *LicenseBasic, err err
 
 func SearchDatalicenseBasicByName(name string) (LicenseBasics []LicenseBasic, err error) {
 
-	err = database.DB.Model(&Datalicense{}).Limit(20).Where("license_name LIKE ?", name+"%").Find(&LicenseBasics).Error
+	err = database.DB.Model(&Datalicense{}).Limit(20).Where("license_name LIKE ?", "%"+name+"%").Find(&LicenseBasics).Error
 	if err != nil {
 		return nil, err
 	}

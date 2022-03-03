@@ -64,7 +64,7 @@ func GetDatasetByName(name string) (_Dataset *Dataset, err error) {
 }
 
 func SearchDatasetByName(name string) (_Dataset []Dataset, err error) {
-	err = database.DB.Model(&Dataset{}).Limit(20).Where("dataset_name LIKE ?", name+"%").Find(&_Dataset).Error
+	err = database.DB.Model(&Dataset{}).Limit(20).Where("dataset_name LIKE ?", "%"+name+"%").Find(&_Dataset).Error
 	if err != nil {
 		return nil, err
 	}
