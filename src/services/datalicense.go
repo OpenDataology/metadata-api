@@ -69,7 +69,7 @@ func GetDatalicensebasicnameService(c *gin.Context, name string, token string) (
 	return res
 }
 
-func SearchDatalicensebasicnameService(c *gin.Context, name string, token string) (h gin.H) {
+func SearchDatalicensebasicnameService(c *gin.Context, name string, t string, token string) (h gin.H) {
 	isAuth, _ := utils.GetToken(token)
 	if !isAuth {
 		res := gin.H{
@@ -77,7 +77,7 @@ func SearchDatalicensebasicnameService(c *gin.Context, name string, token string
 		}
 		return res
 	}
-	datalicensebasic, err := models.SearchDatalicenseBasicByName(name)
+	datalicensebasic, err := models.SearchDatalicenseBasicByName(name, t)
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{"err": "DB Error"})
 		return
