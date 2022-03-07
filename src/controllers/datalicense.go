@@ -64,3 +64,12 @@ func (a *BasicInfo) GetLicenseOtherById(c *gin.Context) {
 	res := service.GetDatalicenseOtherService(c, id, token)
 	a.JsonSuccess(c, http.StatusOK, res)
 }
+
+func (a *BasicInfo) GetLicenseIndex(c *gin.Context) {
+	token := c.Query("token")
+	tp := [4]string{"all", "License", "Data-Specific-License", "DataSource Terms of Use"}
+	int_tp := cast.ToInt(c.Query("type"))
+	t := tp[int_tp]
+	res := service.GetDatalicensesIndexService(c, t, token)
+	a.JsonSuccess(c, http.StatusOK, res)
+}

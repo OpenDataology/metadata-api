@@ -36,6 +36,11 @@ type Dataset struct {
 	Available            int    `gorm:"type:int" json:"available,omitempty"`
 }
 
+type DatasetIndex struct {
+	Id          int    `gorm:"type:int;primary_key;autoIncrement" json:"id"`
+	DatasetName string `gorm:"type:TEXT" json:"dataset_name,omitempty"`
+}
+
 func GetDatasetsByPage(p *utils.Pagination) (Datasets []Dataset, err error) {
 	err = database.DB.Model(&Dataset{}).Scopes(p.GormPaginate()).Find(&Datasets).Error
 	if err != nil {
@@ -65,6 +70,14 @@ func GetDatasetByName(name string) (_Dataset *Dataset, err error) {
 
 func SearchDatasetByName(name string) (_Dataset []Dataset, err error) {
 	err = database.DB.Model(&Dataset{}).Where("dataset_name LIKE ?", "%"+name+"%").Limit(20).Find(&_Dataset).Error
+	if err != nil {
+		return nil, err
+	}
+	return
+}
+
+func GetDatasetIndex() (Datasetindexes []DatasetIndex, err error) {
+	err = database.DB.Model(&Dataset{}).Find(&Datasetindexes).Error
 	if err != nil {
 		return nil, err
 	}

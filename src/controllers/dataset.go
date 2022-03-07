@@ -37,3 +37,9 @@ func (a *BasicInfo) SearchDatasetByName(c *gin.Context) {
 	res := service.SearchDatasetNameService(c, name, token)
 	a.JsonSuccess(c, http.StatusOK, res)
 }
+
+func (a *BasicInfo) GetDatasetIndex(c *gin.Context) {
+	token := c.Query("token")
+	res := service.GetDatasetIndexService(c, token)
+	a.JsonSuccess(c, http.StatusOK, res)
+}

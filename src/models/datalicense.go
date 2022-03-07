@@ -64,6 +64,11 @@ type Datalicense struct {
 	Available                   int    `gorm:"type:int" json:"available,omitempty"`
 }
 
+type LicenseIndex struct {
+	Id          int    `gorm:"type:int;primary_key;autoIncrement" json:"id"`
+	LicenseName string `gorm:"type:TEXT" json:"license_name,omitempty"`
+}
+
 type LicenseBasic struct {
 	Id              int    `json:"id"`
 	LicenseUuid     string `json:"license_uuid,omitempty"`
@@ -342,6 +347,20 @@ func GetDatalicenseOtherByID(id int) (LicenseOtherBoxs []LicenseOther, err error
 			LicenseOtherBoxs = append(LicenseOtherBoxs, *other)
 			_id_other++
 		}
+	}
+	return
+}
+
+func GetDatalicenseIndex(t string) (Licenseindexes []LicenseIndex, err error) {
+	if t == "all" {
+		err = database.DB.Model(&Datalicense{}).Find(&Licenseindexes).Error
+
+	} else {
+		err = database.DB.Model(&Datalicense{}).Where("license_type = ?", t).Find(&Licenseindexes).Error
+
+	}
+	if err != nil {
+		return nil, err
 	}
 	return
 }
