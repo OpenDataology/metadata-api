@@ -14,6 +14,8 @@ func InitRouter() *gin.Engine {
 		basic := new(controllers.BasicInfo)
 		v1.GET("/data-license", basic.ListDatasetLicenses)
 		v1.GET("/dataset", basic.ListDatasets)
+		v1.GET("/get_license_index", basic.GetLicenseIndex)
+		v1.GET("/get_dataset_index", basic.GetDatasetIndex)
 		v1.GET("/get_license_basic_by_id", basic.GetLicenseBasicById)
 		v1.GET("/get_license_basic_by_name", basic.GetLicenseBasicByName)
 		v1.GET("/search_license_basic_by_name", basic.SearchLicenseBasicByName)

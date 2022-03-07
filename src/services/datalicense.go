@@ -144,3 +144,22 @@ func GetDatalicenseOtherService(c *gin.Context, id int, token string) (h gin.H) 
 	}
 	return res
 }
+
+func GetDatalicensesIndexService(c *gin.Context, t string, token string) (h gin.H) {
+	isAuth, _ := utils.GetToken(token)
+	if !isAuth {
+		res := gin.H{
+			"res": "You are not authorized",
+		}
+		return res
+	}
+	datalicenses, err := models.GetDatalicenseIndex(t)
+	if err != nil {
+		c.JSON(http.StatusOK, gin.H{"err": "DB Error"})
+		return
+	}
+	res := gin.H{
+		"data": datalicenses,
+	}
+	return res
+}
