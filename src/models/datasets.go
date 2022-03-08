@@ -10,7 +10,7 @@ type Dataset struct {
 	Id                   int    `gorm:"type:int;primary_key;autoIncrement" json:"id"`
 	DatasetName          string `gorm:"type:TEXT" json:"dataset_name,omitempty"`
 	DatasetVersion       string `gorm:"type:TEXT" json:"dataset_version,omitempty"`
-	LicenseId            int    `json:"license_id,omitempty"`
+	LicenseId            int    `gorm:"type:int" json:"license_id,omitempty"`
 	LicenseName          string `gorm:"type:TEXT" json:"license_name,omitempty"`
 	Licensor             string `gorm:"type:TEXT" json:"licensor,omitempty"`
 	LicenseFrom          string `gorm:"type:TEXT" json:"license_from,omitempty"`
