@@ -1,5 +1,5 @@
-# portal-backend
-The dataset metadata sharing platform backend.
+# metadata-api
+API for listing dataset metadata and license info.
 
 ## How to contribute
 If you’re interested in contributing code, the best starting point is to have a look at our github issues to see which tasks are the most urgent. 
@@ -26,6 +26,6 @@ Deployment Structure
 
 ## How to use
 
-Portal-backend uses [gin](https://github.com/gin-gonic/gin) and [gorm](https://github.com/go-gorm/gorm) to provide robust webapi, the API Doc is [here](https://github.com/dataset-license/portal-backend/wiki/Portal-beckend-API-Doc). 
+Metadata-api uses [gin](https://github.com/gin-gonic/gin) and [gorm](https://github.com/go-gorm/gorm) to provide robust webapi, the API Doc is [here](https://github.com/dataset-license/portal-backend/wiki/Portal-beckend-API-Doc). 
 
 Now you can use the webapi to build your own apps.
