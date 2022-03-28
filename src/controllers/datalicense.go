@@ -12,7 +12,7 @@ import (
 
 func (a *BasicInfo) ListDatasetLicenses(c *gin.Context) {
 	token := c.Query("token")
-	tp := [4]string{"all", "License", "Data-Specific-License", "DataSource Terms of Use"}
+	tp := [4]string{"all", "Data License", "Data-Specific License", "DataSource Terms of Use"}
 	p := utils.NewPagination(c)
 	int_tp := cast.ToInt(c.Query("type"))
 	t := tp[int_tp]
@@ -36,7 +36,7 @@ func (a *BasicInfo) GetLicenseBasicByName(c *gin.Context) {
 
 func (a *BasicInfo) SearchLicenseBasicByName(c *gin.Context) {
 	token := c.Query("token")
-	tp := [4]string{"all", "License", "Data-Specific-License", "DataSource Terms of Use"}
+	tp := [4]string{"all", "Data License", "Data-Specific License", "DataSource Terms of Use"}
 	name := c.Query("name")
 	int_tp := cast.ToInt(c.Query("type"))
 	t := tp[int_tp]
@@ -67,7 +67,7 @@ func (a *BasicInfo) GetLicenseOtherById(c *gin.Context) {
 
 func (a *BasicInfo) GetLicenseIndex(c *gin.Context) {
 	token := c.Query("token")
-	tp := [4]string{"all", "License", "Data-Specific-License", "DataSource Terms of Use"}
+	tp := [4]string{"all", "Data License", "Data-Specific License", "DataSource Terms of Use"}
 	int_tp := cast.ToInt(c.Query("type"))
 	t := tp[int_tp]
 	res := service.GetDatalicensesIndexService(c, t, token)
