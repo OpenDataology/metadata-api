@@ -1,6 +1,7 @@
 package models
 
 import (
+	"fmt"
 	"crypto/md5"
 	"encoding/hex"
 
