@@ -12,7 +12,7 @@ type User struct {
 	Id           int    `gorm:"type:int;primary_key;autoIncrement" json:"id"`
 	Account      string `gorm:"type:TEXT" json:"account,omitempty"`
 	Password     string `gorm:"type:TEXT" json:"password,omitempty"`
-	Verification string `gorm:"type:TEXT" json:"license_id,omitempty"`
+	Verification string `gorm:"type:TEXT" json:"verification,omitempty"`
 }
 
 func SetSignup(account string, password string, verification string) (user *User, err error) {
