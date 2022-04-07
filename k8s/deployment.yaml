@@ -14,7 +14,7 @@ spec:
         app: portal-backend
     spec:
       containers:
-        - image: robekeane/portal-backend:0.6
+        - image: robekeane/portal-backend:0.7
           name: portal-backend-con
           env:
             - name: ADDR
