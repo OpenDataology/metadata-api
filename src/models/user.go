@@ -3,6 +3,7 @@ package models
 import (
 	"crypto/md5"
 	"encoding/hex"
+	"fmt"
 
 	"github.com/dataset-license/portal-backend/src/database"
 )
@@ -16,9 +17,10 @@ type User struct {
 
 func SetSignup(account string, password string, verification string) (user *User, err error) {
 	var count int64
+
 	database.DB.Model(&User{}).Where("account = ?", account).Count(&count)
 	if count > 0 {
-		return
+		return nil, fmt.Errorf("account already exist!")
 	}
 	password_byte := []byte(password)
 	md5Ctx := md5.New()

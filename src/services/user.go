@@ -10,7 +10,11 @@ import (
 func SetSignUpService(c *gin.Context, account string, password string, verification string, token string) (h gin.H) {
 	user, err := models.SetSignup(account, password, verification)
 	if err != nil {
-		c.JSON(http.StatusOK, gin.H{"err": "DB Error"})
+		if err.Error() == "account already exist!" {
+			c.JSON(http.StatusOK, gin.H{"err": "account already exist!"})
+		} else {
+			c.JSON(http.StatusOK, gin.H{"err": "DB Error"})
+		}
 		return
 	}
 	res := gin.H{

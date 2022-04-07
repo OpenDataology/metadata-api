@@ -15,9 +15,6 @@ func (a *BasicInfo) SetSignup(c *gin.Context) {
 	token := c.Query("token")
 
 	res := service.SetSignUpService(c, account, password, verification, token)
-	if res == nil{
-		a.JsonFail(c, http.StatusOK, "user already exist")
-	}
 	a.JsonSuccess(c, http.StatusOK, res)
 }
 
