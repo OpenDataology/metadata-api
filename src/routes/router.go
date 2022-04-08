@@ -26,7 +26,7 @@ func InitRouter() *gin.Engine {
 		v1.GET("/get_dataset_by_name", basic.GetDatasetByName)
 		v1.GET("/search_dataset_by_name", basic.SearchDatasetByName)
 		v1.POST("/sign_up", basic.SetSignup)
-		v1.GET("/sign_in", basic.GetSignin)
+		v1.POST("/sign_in", basic.GetSignin)
 	}
 	return router
 
