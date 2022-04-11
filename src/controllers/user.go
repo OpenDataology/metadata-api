@@ -9,20 +9,20 @@ import (
 )
 
 func (a *BasicInfo) SetSignup(c *gin.Context) {
-	account := c.Query("account")
-	password := c.Query("password")
-	verification := c.Query("verification")
-	token := c.Query("token")
+	account := c.PostForm("account")
+	password := c.PostForm("password")
+	verification := c.PostForm("verification")
+	token := c.PostForm("token")
 
 	res := service.SetSignUpService(c, account, password, verification, token)
 	a.JsonSuccess(c, http.StatusOK, res)
 }
 
 func (a *BasicInfo) GetSignin(c *gin.Context) {
-	account := c.Query("account")
-	password := c.Query("password")
-	verification := c.Query("verification")
-	token := c.Query("token")
+	account := c.PostForm("account")
+	password := c.PostForm("password")
+	verification := c.PostForm("verification")
+	token := c.PostForm("token")
 
 	res := service.GetSignInService(c, account, password, verification, token)
 	a.JsonSuccess(c, http.StatusOK, res)
