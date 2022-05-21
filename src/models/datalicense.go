@@ -1,6 +1,7 @@
 package models
 
 import (
+	"fmt"
 	"reflect"
 	"strings"
 
@@ -70,7 +71,7 @@ type LicenseIndex struct {
 }
 
 type LicenseBasic struct {
-	Id              int    `json:"id"`
+	Id              int    `json:"id,omitempty"`
 	LicenseUuid     string `json:"license_uuid,omitempty"`
 	LicenseName     string `json:"license_name,omitempty"`
 	LicenseType     string `json:"license_type,omitempty"`
@@ -136,6 +137,121 @@ type LicenseOther struct {
 	Id       int    `json:"id"`
 	Property string `json:"property,omitempty"`
 	Value    string `json:"value,omitempty"`
+}
+
+type License4Create struct {
+	Name             string `json:"name,omitempty"`
+	Rights           string `json:"rights,omitempty"`
+	Limitations      string `json:"limitations,omitempty"`
+	Limitations_Text string `json:"limitations_text,omitempty"`
+	Obligations      string `json:"obligations,omitempty"`
+	Obligations_Text string `json:"obligations_text,omitempty"`
+}
+
+type LicenseData4Create struct {
+	Access       License4Create `json:"access,omitempty"`
+	Tagging      License4Create `json:"tagging,omitempty"`
+	Distribute   License4Create `json:"distribute,omitempty"`
+	Network      License4Create `json:"network,omitempty"`
+	Represent    License4Create `json:"represent,omitempty"`
+	Modification License4Create `json:"modification,omitempty"`
+}
+
+type LicenseModel4Create struct {
+	Benchmark  License4Create `json:"benchmark,omitempty"`
+	Research   License4Create `json:"research,omitempty"`
+	Publish    License4Create `json:"publish,omitempty"`
+	Internal   License4Create `json:"internal,omitempty"`
+	Output_com License4Create `json:"output_com,omitempty"`
+	Com        License4Create `json:"com,omitempty"`
+	Rev        License4Create `json:"rev,omitempty"`
+}
+
+type LicenseOthers4Create struct {
+	Liability      string `json:"liability,omitempty"`
+	Designated     string `json:"designated,omitempty"`
+	Additional     string `json:"additional,omitempty"`
+	Credit         string `json:"credit,omitempty"`
+	ValidityPeriod int    `json:"validityPeriod,omitempty"`
+}
+
+type LicenseUpload struct {
+	Data   LicenseData4Create   `json:"data,omitempty"`
+	Model  LicenseModel4Create  `json:"model,omitempty"`
+	Basics LicenseBasic         `json:"basics,omitempty"`
+	Others LicenseOthers4Create `json:"others,omitempty"`
+}
+
+func SetDatalicense(license LicenseUpload) (err error) {
+	var count int64
+	var Data_license *Datalicense
+	name := license.Basics.LicenseName
+	database.DB.Model(&Datalicense{}).Where("license_name = ?", name).Count(&count)
+	if count > 0 {
+		return fmt.Errorf("license_name already exist!")
+	}
+	Data_license = new(Datalicense)
+
+	//LicenseBasic
+	Data_license.LicenseName = license.Basics.LicenseName
+	Data_license.LicenseType = license.Basics.LicenseType
+	Data_license.OsiApproved = license.Basics.OsiApproved
+	Data_license.ShortIdentifier = license.Basics.ShortIdentifier
+
+	//LicenseOthers
+	Data_license.OtherAdditional = license.Others.Additional
+	Data_license.OtherCredit = license.Others.Credit
+	Data_license.OtherDesignated = license.Others.Designated
+	Data_license.OtherLiability = license.Others.Liability
+	Data_license.OtherValidityPeriod = license.Others.ValidityPeriod
+
+	//License Data Part
+	Data_license.DataAccessRights = license.Data.Access.Rights
+	Data_license.DataAccessObligations = license.Data.Access.Obligations_Text
+	Data_license.DataAccessLimitations = license.Data.Access.Limitations_Text
+	Data_license.DataDistributeRights = license.Data.Distribute.Rights
+	Data_license.DataDistributeObligations = license.Data.Distribute.Obligations_Text
+	Data_license.DataDistributeLimitations = license.Data.Distribute.Limitations_Text
+	Data_license.DataModificationRights = license.Data.Modification.Rights
+	Data_license.DataModificationObligations = license.Data.Modification.Obligations_Text
+	Data_license.DataModificationLimitations = license.Data.Modification.Limitations_Text
+	Data_license.DataNetworkRights = license.Data.Network.Rights
+	Data_license.DataNetworkObligations = license.Data.Network.Obligations_Text
+	Data_license.DataNetworkLimitations = license.Data.Network.Limitations_Text
+	Data_license.DataRepresentRights = license.Data.Represent.Rights
+	Data_license.DataRepresentObligations = license.Data.Represent.Obligations_Text
+	Data_license.DataRepresentLimitations = license.Data.Represent.Limitations_Text
+	Data_license.DataTaggingRights = license.Data.Tagging.Rights
+	Data_license.DataTaggingObligations = license.Data.Tagging.Obligations_Text
+	Data_license.DataTaggingLimitations = license.Data.Tagging.Limitations_Text
+
+	//License Model Part
+	Data_license.ModelBenchmarkRights = license.Model.Benchmark.Rights
+	Data_license.ModelBenchmarkObligations = license.Model.Benchmark.Obligations_Text
+	Data_license.ModelBenchmarkLimitations = license.Model.Benchmark.Limitations_Text
+	Data_license.ModelComRights = license.Model.Com.Rights
+	Data_license.ModelComObligations = license.Model.Com.Obligations_Text
+	Data_license.ModelComLimitations = license.Model.Com.Limitations_Text
+	Data_license.ModelInternalRights = license.Model.Internal.Rights
+	Data_license.ModelInternalObligations = license.Model.Internal.Obligations_Text
+	Data_license.ModelInternalLimitations = license.Model.Internal.Limitations_Text
+	Data_license.ModelOutputComRights = license.Model.Output_com.Rights
+	Data_license.ModelOutputComObligations = license.Model.Output_com.Obligations_Text
+	Data_license.ModelOutputComLimitations = license.Model.Output_com.Limitations_Text
+	Data_license.ModelPublishRights = license.Model.Publish.Rights
+	Data_license.ModelPublishObligations = license.Model.Publish.Obligations_Text
+	Data_license.ModelPublishLimitations = license.Model.Publish.Limitations_Text
+	Data_license.ModelResearchRights = license.Model.Research.Rights
+	Data_license.ModelResearchObligations = license.Model.Research.Obligations_Text
+	Data_license.ModelResearchLimitations = license.Model.Research.Limitations_Text
+	Data_license.ModelRevRights = license.Model.Rev.Rights
+	Data_license.ModelRevObligations = license.Model.Rev.Obligations_Text
+	Data_license.ModelRevLimitations = license.Model.Rev.Limitations_Text
+
+	if err := database.DB.Create(&Data_license).Error; err != nil {
+		return err
+	}
+	return
 }
 
 func GetDatalicensesByPage(p *utils.Pagination, t string) (Datalicenses []Datalicense, err error) {
