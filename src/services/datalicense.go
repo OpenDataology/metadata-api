@@ -163,3 +163,19 @@ func GetDatalicensesIndexService(c *gin.Context, t string, token string) (h gin.
 	}
 	return res
 }
+
+func SetLicense(c *gin.Context, license models.LicenseUpload, token string) (h gin.H) {
+	data_license, err := models.SetDatalicense(license)
+	if err != nil {
+		if err.Error() == "license already exist!" {
+			c.JSON(http.StatusOK, gin.H{"err": "license already exist!"})
+		} else {
+			c.JSON(http.StatusOK, gin.H{"err": "DB Error"})
+		}
+		return
+	}
+	res := gin.H{
+		"data": &data_license,
+	}
+	return res
+}

@@ -182,13 +182,12 @@ type LicenseUpload struct {
 	Others LicenseOthers4Create `json:"others,omitempty"`
 }
 
-func SetDatalicense(license LicenseUpload) (err error) {
+func SetDatalicense(license LicenseUpload) (Data_license *Datalicense, err error) {
 	var count int64
-	var Data_license *Datalicense
 	name := license.Basics.LicenseName
 	database.DB.Model(&Datalicense{}).Where("license_name = ?", name).Count(&count)
 	if count > 0 {
-		return fmt.Errorf("license_name already exist!")
+		return nil, fmt.Errorf("license_name already exist!")
 	}
 	Data_license = new(Datalicense)
 
@@ -249,7 +248,7 @@ func SetDatalicense(license LicenseUpload) (err error) {
 	Data_license.ModelRevLimitations = license.Model.Rev.Limitations_Text
 
 	if err := database.DB.Create(&Data_license).Error; err != nil {
-		return err
+		return nil, err
 	}
 	return
 }

@@ -1,8 +1,10 @@
 package controllers
 
 import (
+	"encoding/json"
 	"net/http"
 
+	"github.com/dataset-license/portal-backend/src/models"
 	service "github.com/dataset-license/portal-backend/src/services"
 	"github.com/dataset-license/portal-backend/src/utils"
 	"github.com/spf13/cast"
@@ -72,4 +74,18 @@ func (a *BasicInfo) GetLicenseIndex(c *gin.Context) {
 	t := tp[int_tp]
 	res := service.GetDatalicensesIndexService(c, t, token)
 	a.JsonSuccess(c, http.StatusOK, res)
+}
+
+func (a *BasicInfo) SetLicense(c *gin.Context) {
+	license := c.PostForm("license")
+	token := c.PostForm("token")
+	var data models.LicenseUpload
+
+	if err := json.Unmarshal([]byte(license), &data); err == nil {
+		a.JsonSuccess(c, http.StatusOK, nil)
+	} else {
+		res := service.SetLicense(c, data, token)
+		a.JsonSuccess(c, http.StatusOK, res)
+	}
+
 }
