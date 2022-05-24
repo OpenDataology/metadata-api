@@ -170,7 +170,7 @@ func SetLicense(c *gin.Context, license models.LicenseUpload, token string) (h g
 		if err.Error() == "license already exist!" {
 			c.JSON(http.StatusOK, gin.H{"err": "license already exist!"})
 		} else {
-			c.JSON(http.StatusOK, gin.H{"err": "DB Error"})
+			c.JSON(http.StatusOK, gin.H{"err": err.Error()})
 		}
 		return
 	}
