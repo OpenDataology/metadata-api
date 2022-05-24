@@ -198,11 +198,11 @@ func SetDatalicense(license LicenseUpload) (Data_license *Datalicense, err error
 	Data_license.ShortIdentifier = license.Basics.ShortIdentifier
 
 	//LicenseOthers
-	Data_license.OtherAdditional = license.Others.Additional
-	Data_license.OtherCredit = license.Others.Credit
-	Data_license.OtherDesignated = license.Others.Designated
-	Data_license.OtherLiability = license.Others.Liability
-	Data_license.OtherValidityPeriod = license.Others.ValidityPeriod
+	Data_license.Additional = license.Others.Additional
+	Data_license.Credit = license.Others.Credit
+	Data_license.Designated = license.Others.Designated
+	Data_license.Liability = license.Others.Liability
+	Data_license.ValidityPeriod = license.Others.ValidityPeriod
 
 	//License Data Part
 	Data_license.DataAccessRights = license.Data.Access.Rights
