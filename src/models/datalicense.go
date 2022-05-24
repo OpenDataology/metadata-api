@@ -172,7 +172,7 @@ type LicenseOthers4Create struct {
 	Designated     string `json:"designated,omitempty"`
 	Additional     string `json:"additional,omitempty"`
 	Credit         string `json:"credit,omitempty"`
-	ValidityPeriod int    `json:"validityPeriod,omitempty"`
+	ValidityPeriod int    `json:"validity_period,omitempty"`
 }
 
 type LicenseUpload struct {
@@ -191,13 +191,13 @@ func SetDatalicense(license LicenseUpload) (Data_license *Datalicense, err error
 	}
 	Data_license = new(Datalicense)
 
-	//LicenseBasic
+	//License Basic Part
 	Data_license.LicenseName = license.Basics.LicenseName
 	Data_license.LicenseType = license.Basics.LicenseType
 	Data_license.OsiApproved = license.Basics.OsiApproved
 	Data_license.ShortIdentifier = license.Basics.ShortIdentifier
 
-	//LicenseOthers
+	//License Other Properties
 	Data_license.Additional = license.Others.Additional
 	Data_license.Credit = license.Others.Credit
 	Data_license.Designated = license.Others.Designated
