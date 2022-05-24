@@ -56,11 +56,11 @@ type Datalicense struct {
 	ModelRevRights              string `gorm:"type:TEXT" json:"model_rev_rights,omitempty"`
 	ModelRevObligations         string `gorm:"type:TEXT" json:"model_rev_obligations,omitempty"`
 	ModelRevLimitations         string `gorm:"type:TEXT" json:"model_rev_limitations,omitempty"`
-	OtherCredit                 string `gorm:"type:TEXT" json:"credit,omitempty"`
-	OtherValidityPeriod         int    `gorm:"type:int" json:"validity_period,omitempty"`
-	OtherLiability              string `gorm:"type:TEXT" json:"liability,omitempty"`
-	OtherDesignated             string `gorm:"type:TEXT" json:"designated,omitempty"`
-	OtherAdditional             string `gorm:"type:TEXT" json:"additional,omitempty"`
+	Credit                      string `gorm:"type:TEXT" json:"credit,omitempty"`
+	ValidityPeriod              int    `gorm:"type:int" json:"validity_period,omitempty"`
+	Liability                   string `gorm:"type:TEXT" json:"liability,omitempty"`
+	Designated                  string `gorm:"type:TEXT" json:"designated,omitempty"`
+	Additional                  string `gorm:"type:TEXT" json:"additional,omitempty"`
 	Remark                      string `gorm:"type:TEXT" json:"remark,omitempty"`
 	Available                   int    `gorm:"type:int" json:"available,omitempty"`
 }
