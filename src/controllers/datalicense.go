@@ -76,9 +76,7 @@ func (a *BasicInfo) GetLicenseIndex(c *gin.Context) {
 }
 
 func (a *BasicInfo) SetLicense(c *gin.Context) {
-	//license := c.PostForm("license")
 	token := c.PostForm("token")
-	//var data models.LicenseUpload
 
 	jsonData := models.LicenseUpload{}
 	err := c.BindJSON(&jsonData)
