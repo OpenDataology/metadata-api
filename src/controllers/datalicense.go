@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"encoding/json"
 	"net/http"
 
 	"github.com/dataset-license/portal-backend/src/models"
@@ -77,14 +76,18 @@ func (a *BasicInfo) GetLicenseIndex(c *gin.Context) {
 }
 
 func (a *BasicInfo) SetLicense(c *gin.Context) {
-	license := c.PostForm("license")
+	//license := c.PostForm("license")
 	token := c.PostForm("token")
-	var data models.LicenseUpload
+	//var data models.LicenseUpload
 
-	if err := json.Unmarshal([]byte(license), &data); err == nil {
-		a.JsonSuccess(c, http.StatusOK, nil)
+	jsonData := models.LicenseUpload{}
+	err := c.BindJSON(&jsonData)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"result": "Unmarshal JSON failed",
+		})
 	} else {
-		res := service.SetLicense(c, data, token)
+		res := service.SetLicense(c, jsonData, token)
 		a.JsonSuccess(c, http.StatusOK, res)
 	}
 
