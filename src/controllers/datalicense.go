@@ -81,7 +81,7 @@ func (a *BasicInfo) SetLicense(c *gin.Context) {
 	token := c.PostForm("token")
 	var data models.LicenseUpload
 
-	if err := json.Unmarshal([]byte(license), &data); err == nil {
+	if err := json.Unmarshal([]byte(license), &data); err != nil {
 		a.JsonSuccess(c, http.StatusOK, nil)
 	} else {
 		res := service.SetLicense(c, data, token)
