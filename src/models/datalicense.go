@@ -197,7 +197,7 @@ func SetDatalicense(license LicenseUpload) (Data_license *Datalicense, err error
 	Data_license.OsiApproved = license.Basics.OsiApproved
 	Data_license.ShortIdentifier = license.Basics.ShortIdentifier
 
-	//License Other Properties
+	//License Other Properties Part
 	Data_license.Additional = license.Others.Additional
 	Data_license.Credit = license.Others.Credit
 	Data_license.Designated = license.Others.Designated
