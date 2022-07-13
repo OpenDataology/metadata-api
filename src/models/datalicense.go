@@ -272,7 +272,7 @@ func GetDatalicensesByPage(p *utils.Pagination, t string) (Datalicenses []Datali
 
 func GetDataLicenseBySomeConditions(p *utils.Pagination, options ...func(option *gorm.DB)) (Datalicenses []Datalicense, err error) {
 	var total int64
-	db := database.DB.Model(&Datalicense{})
+	db := database.DB.Model(&Datalicense{}).Where("`license_type` = 'Data License'")
 
 	for _, option := range options {
 		option(db)
