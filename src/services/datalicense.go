@@ -179,3 +179,37 @@ func SetLicense(c *gin.Context, license models.LicenseUpload, token string) (h g
 	}
 	return res
 }
+func GetDataLicenseBySomeConditions(c *gin.Context, p *utils.Pagination, token string, condition models.Datalicense) (h gin.H) {
+	isAuth, _ := utils.GetToken(token)
+	if !isAuth {
+		res := gin.H{
+			"res": "You are not authorized",
+		}
+		return res
+	}
+
+	datalicenses, err := models.GetDataLicenseBySomeConditions(p,
+		models.ID(condition.Id),
+		models.LicenseName(condition.LicenseName),
+		models.DataAccessRights(condition.DataAccessRights),
+		models.DataTaggingRights(condition.DataTaggingRights),
+		models.DataRepresentRights(condition.DataRepresentRights),
+		models.ModelBenchmarkRights(condition.ModelBenchmarkRights),
+		models.ModelResearchRights(condition.ModelResearchRights),
+		models.ModelPublishRights(condition.ModelPublishRights),
+		models.ModelInternalRights(condition.ModelInternalRights),
+		models.ModelOutputComRights(condition.ModelOutputComRights),
+		models.ModelComRights(condition.ModelComRights),
+	)
+	if err != nil {
+		c.JSON(http.StatusOK, gin.H{"err": "DB Error"})
+		return
+	}
+	res := gin.H{
+		"pageNum":  p.Page,
+		"pageSize": p.Size,
+		"totalNum": p.Total,
+		"data":     datalicenses,
+	}
+	return res
+}

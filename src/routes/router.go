@@ -28,6 +28,7 @@ func InitRouter() *gin.Engine {
 		v1.POST("/sign_up", basic.SetSignup)
 		v1.POST("/sign_in", basic.GetSignin)
 		v1.POST("/set_license", basic.SetLicense)
+		v1.POST("/licenses_sc", basic.GetDatalicenseBySomeConditions)
 	}
 	return router
 

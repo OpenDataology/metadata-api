@@ -2,6 +2,7 @@ package models
 
 import (
 	"fmt"
+	"gorm.io/gorm"
 	"reflect"
 	"strings"
 
@@ -262,6 +263,23 @@ func GetDatalicensesByPage(p *utils.Pagination, t string) (Datalicenses []Datali
 		err = database.DB.Model(&Datalicense{}).Where("license_type = ?", t).Scopes(p.GormPaginate()).Find(&Datalicenses).Error
 		database.DB.Model(&Datalicense{}).Where("license_type = ?", t).Count(&total)
 	}
+	if err != nil {
+		return nil, err
+	}
+	p.Total = cast.ToInt(total)
+	return
+}
+
+func GetDataLicenseBySomeConditions(p *utils.Pagination, options ...func(option *gorm.DB)) (Datalicenses []Datalicense, err error) {
+	var total int64
+	db := database.DB.Model(&Datalicense{}).Where("`license_type` = 'Data License'")
+
+	for _, option := range options {
+		option(db)
+	}
+
+	err = db.Scopes(p.GormPaginate()).Find(&Datalicenses).Error
+	db.Count(&total)
 	if err != nil {
 		return nil, err
 	}
