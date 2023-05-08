@@ -1,13 +1,11 @@
 /*
 datasets.go
 
-Copyright (c) 2022 The OpenDataology Authors 
+Copyright (c) 2022 The OpenDataology Authors
 All rights reserved.
 
 SPDX-License-Identifier: Apache-2.0
 */
-
-
 
 package models
 
@@ -26,6 +24,7 @@ type Dataset struct {
 	Licensor             string `gorm:"type:TEXT" json:"licensor,omitempty"`
 	LicenseFrom          string `gorm:"type:TEXT" json:"license_from,omitempty"`
 	LicenseLocation      string `gorm:"type:TEXT" json:"license_location,omitempty"`
+	TaskType             string `gorm:"type:TEXT" json:"task_type,omitempty"`
 	LicenseContent       string `gorm:"type:TEXT" json:"license_content,omitempty"`
 	Origin               string `gorm:"type:TEXT" json:"origin,omitempty"`
 	DownloadedOutlet     string `gorm:"type:TEXT" json:"downloaded_outlet,omitempty"`
